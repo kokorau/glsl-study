@@ -1,0 +1,31 @@
+{
+  "name": "webvj",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "kokorau <kokorau@gmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt --spa",
+    "build": "nuxt build --spa",
+    "start": "nuxt start --spa",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "nuxt": "^1.0.0",
+    "three": "^0.92.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-vue": "^4.0.0",
+    "file-loader": "^1.1.11",
+    "glslify-loader": "^1.0.2",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "raw-loader": "^0.5.1"
+  }
+}
