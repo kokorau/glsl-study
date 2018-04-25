@@ -1,10 +1,10 @@
 <script>
   import * as THREE from 'three'
-  import fragmentShader from './fragmant.glsl'
-  import vertexShader from './vertex.glsl'
+  import fragment from './fragment.glsl'
+  import vertex from './vertex.glsl'
 
   export default {
-    name: 'GlslCnavas',
+    name: 'BoxSample',
     data () {
       // === scene ===
       const scene = new THREE.Scene();
@@ -15,47 +15,48 @@
 
       // === camera ===
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 1;
-
-      // === light ===
-      const light = new THREE.DirectionalLight(0xffffff);
-      light.position.set(0, 0, 10);
+      camera.position.z = 512;
 
       // === model ===
-      const geometry = new THREE.PlaneGeometry(1, 1);
-      // const material = new THREE.MeshStandardMaterial({color: 0x00ff00});
+      const geometry = new THREE.PlaneGeometry(512, 512);
+      const uniform = {
+        t: {value: 1.0},
+        resolution: {value: new THREE.Vector2()}
+      };
       const material = new THREE.ShaderMaterial({
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader
-      })
-      const plane = new THREE.Mesh(geometry, material);
+        uniforms: uniform,
+        vertexShader: vertex,
+        fragmentShader: fragment
+      });
+      const mesh = new THREE.Mesh(geometry, material);
 
       return {
         scene: scene,
         renderer: renderer,
         camera: camera,
-        light: light,
-        plane: plane,
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader,
-        canRender: false
+        uniform: uniform,
+        mesh: mesh,
+        canRender: false,
+        clock: new THREE.Clock()
+      }
+    },
+    methods: {
+      animate () {
+        requestAnimationFrame(this.animate);
+        this.render()
+      },
+      render () {
+        this.uniform.t.value += this.clock.getDelta();
+        this.renderer.render(this.scene, this.camera);
       }
     },
     created () {
       // === sceneにmodel,light, cameraを追加 ===
       this.scene.add(this.camera);
-      this.scene.add(this.light);
-      this.scene.add(this.plane);
+      this.scene.add(this.mesh);
     },
     mounted () {
       this.canRender = true;
-    },
-    methods: {
-      animate () {
-        requestAnimationFrame(this.animate);
-
-        this.renderer.render(this.scene, this.camera);
-      }
     },
     render (h) {
       if (this.canRender) {
@@ -76,13 +77,9 @@
       const stage = document.getElementById('stage')
       stage.appendChild(this.renderer.domElement)
       this.animate()
+    },
+    beforeDestroy() {
+      this.scene = null;
     }
   }
 </script>
-
-<style>
-  .canvas {
-    width: 100%;
-    height: 100%;
-  }
-</style>
