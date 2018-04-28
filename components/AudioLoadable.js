@@ -1,21 +1,30 @@
-export default minxin = {
-  data () {
-    return {
-      path: 'music/kokorau/mix_03.wav' //FIXME: pathの有効化
-    }
+import * as THREE from 'three';
+import { storage } from '@/plugins/firebase';
+
+const ctx = new AudioContext();
+
+export default {
+  name: 'AudioLoadable',
+  props: {
+    path: { default: 'music/kokorau/mix_03.wav' },
+  },
+  computed: {
+    source() {
+      return ctx.createBufferSource();
+    },
+    gainNode() {
+      return ctx.createGain();
+    },
   },
   methods: {
-    loadAudio() {
-      this.$store.dispatch('audio/setMusic', this.path)
+    setAudio(path, autoPlay = true) {
+      this.$store.dispatch('audio/set', this.path);
     },
-    playAudio() {
-      this.$store.dispatch('audio/playMusic')
-    }
+    startAudio(startAt = 0) {
+      this.$store.dispatch('audio/start', startAt);
+    },
+    pauseAudio() {
+      this.$store.dispatch('audio/pause');
+    },
   },
-  created () {
-    this.loadAudio();
-  },
-  mounted () {
-    this.playAudio();
-  }
-}
+};

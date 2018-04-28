@@ -1,16 +1,23 @@
 <template lang="pug">
   section.container
-    glsl-canvas
+    audio-player
+    glsl-canvas(ref="canvas")
 </template>
 
 <script>
 import GlslCanvas from '@/components/GlslCanvas'
+import AudioPlayer from "../components/AudioPlayer";
 
 export default {
   components: {
+    AudioPlayer,
     GlslCanvas
-  }
+  },
+  methods: {}
 }
 </script>
 
-<style></style>
+<style lang="sass">
+.container
+  position: relative
+</style>

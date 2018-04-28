@@ -1,40 +1,37 @@
-import {db, storage} from '@/plugins/firebase'
+import { storage } from '@/plugins/firebase';
+const ctx = new AudioContext();
 
-const context = new AudioContext()
-const source = context.createBufferSource()
-
-
-export const state = () => { // mutationからのみ変更可能な変数
-  source: source
-}
-
-export const mutations = { // commitで実行
-  setBuffer (state, buffer) {
-    state.source.buffer = buffer
-    state.source.connect(context.destination)
+const state = () => ({
+  source: ctx.createBufferSource(),
+  gainNode: ctx.createGain(),
+});
+const getters = {};
+const mutations = {
+  setSource(state, buffer) {
+    state.source.buffer = ctx.decodeAudioData(buffer);
+    state.source.connect(ctx.destination);
+    state.source.loop = true;
   },
-  playMusic (state, startAt=0) {
-    state.source.start(startAt)
-  }
-}
+};
+const actions = {
+  async set({ commit, state }, path) {
+    const url = await storage.ref(path).getDownloadURL();
+    const res = await fetch(url);
+    const buf = await res.arrayBuffer();
 
-export const actions = { // dispatchで実行
-  setMusic ({commit}, path) {
-    const url = storage.ref(path)
-
-    url.getDownloadURL().then(url => {
-      fetch(url, {mode: 'cors'}).then(
-        response => response.arrayBuffer()
-      ).then(audio => {
-        context.decodeAudioData(audio, decodeAudioData => {
-          commit('setBuffer', decodeAudioData)
-        })
-      })
-    })
+    commit('setSource', buf);
   },
-  playMusic ({commit}, startAt=0) {
-    commit('playMusic', startAt)
-  }
-}
+  start({ commit, state }, startAt) {
+    console.log('start Audio');
+    state.source.start(startAt);
+  },
+  pause({ commit }) {
+    if (ctx.state === 'running') {
+      ctx.suspend();
+    } else if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+  },
+};
 
-export const getters = {}
+export { state, getters, actions, mutations };
