@@ -5,7 +5,11 @@ const state = () => ({
   source: ctx.createBufferSource(),
   gainNode: ctx.createGain(),
 });
-const getters = {};
+const getters = {
+  getVolume(state) {
+    return state.gainNode.gain.getVolume()
+  }
+};
 const mutations = {
   setSource(state, buffer) {
     state.source.buffer = ctx.decodeAudioData(buffer);
@@ -31,7 +35,7 @@ const actions = {
     } else if (ctx.state === 'suspended') {
       ctx.resume();
     }
-  },
+  }
 };
 
 export { state, getters, actions, mutations };

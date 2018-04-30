@@ -1,6 +1,6 @@
 <template lang="pug">
   section.container
-    audio-player
+    audio-player(path="")
     glsl-canvas(ref="canvas")
 </template>
 

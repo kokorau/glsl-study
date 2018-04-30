@@ -13,11 +13,13 @@
       UniformAvailable
     ],
     name: 'GlslLoadable',
-    data () {
+    created () {
+      this.setAudio(this.path);
+    },
+    mounted () {
       const geometry = new THREE.PlaneGeometry(1, 1);
-      const uniform = {};
       const material = new THREE.ShaderMaterial({
-        uniforms: uniform,
+        uniforms: this.uniform,
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
         extensions: {
@@ -27,20 +29,11 @@
           shaderTextureLOD: false,
         }
       })
-      const mesh = new THREE.Mesh(geometry, material);
+      this.addObject(new THREE.Mesh(geometry, material))
 
-      return {
-        uniform: uniform,
-        mesh: mesh
-      }
-    },
-    created () {
-      this.setAudio(this.path);
-      this.scene.add(this.mesh);
-    },
-    mounted () {
       this.startAudio();
     },
+    updated () {},
     methods: {
       animate () {
         requestAnimationFrame(this.animate);

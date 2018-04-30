@@ -2,13 +2,6 @@ import * as THREE from 'three';
 
 export default {
   data() {
-    // === scene ===
-    const scene = new THREE.Scene();
-
-    // === renderer ===
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
     // === camera ===
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -23,21 +16,26 @@ export default {
     light.position.set(0, 0, 10);
 
     return {
-      scene: scene,
-      renderer: renderer,
       camera: camera,
       light: light,
       clock: new THREE.Clock(),
       canRender: false,
+      objects: []
     };
-  },
-  created() {
-    // === sceneにmodel,light, cameraを追加 ===
-    this.scene.add(this.camera);
-    this.scene.add(this.light);
   },
   mounted() {
     this.canRender = true;
+
+    // === scene ===
+    this.scene = new THREE.Scene();
+
+    // === renderer ===
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // === sceneにmodel,light, cameraを追加 ===
+    this.scene.add(this.camera);
+    this.scene.add(this.light);
   },
   methods: {
     animate() {
@@ -45,11 +43,15 @@ export default {
 
       this.renderer.render(this.scene, this.camera);
     },
+    addObject (mesh) {
+      this.scene.add(this.mesh);
+      this.objects.push(mesh)
+    }
   },
   render(h) {
     if (this.canRender) {
       if (
-        process.env.NODE_ENV === 'development' &&
+        process.env.NODE_ENV === 'development ' &&
         this.$slots.default &&
         this.$slots.default.length > 1
       ) {
@@ -58,10 +60,9 @@ export default {
         );
       }
 
-      return h('div', {
-        class: 'stage',
-        attrs: { id: 'stage' },
-      });
+      return (
+        <div class="stage" id="stage"/>
+      )
     }
     return h('div', 'server side');
   },

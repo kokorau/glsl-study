@@ -8,6 +8,5 @@ uniform sampler2D samples;
 uniform float volume;
 
 void main (void) {
-  float b = 1. - abs(volume / 255. - 1.0);
-  gl_FragColor = vec4(0.0, 0.5, b, 1.0);
+  gl_FragColor = vec4(100.0/500.0, 0.7, 1.0, 1.0);
 }
