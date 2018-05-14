@@ -5,15 +5,16 @@
   "author": "kokorau <kokorau@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt --spa",
-    "build": "nuxt build --spa",
-    "start": "nuxt start --spa",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "prettier": "prettier --write --single-quote --trailing-comma es5 \"./**/*.js\"",
     "precommit": "yarn run prettier"
   },
   "dependencies": {
+    "@types/three": "^0.91.10",
     "firebase": "^4.13.1",
     "nuxt": "^1.0.0",
     "three": "^0.92.0"

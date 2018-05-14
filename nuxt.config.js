@@ -31,27 +31,23 @@ module.exports = {
           exclude: /(node_modules)/,
         });
       }
-
       config.module.rules.push({
         test: /\.(glsl|frag|vert)$/,
         loader: 'raw-loader',
         exclude: /node_modules/,
       });
-
       config.module.rules.push({
         test: /\.(glsl|frag|vert)$/,
         loader: 'glslify-loader',
         exclude: /node_modules/,
       });
-
       config.module.rules.push({
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader?name=images/[name].[ext]',
       });
     },
-    /*
-    ** postcss
-     */
-    postcss: [require('autoprefixer')()],
+    postcss: [
+      require('autoprefixer')()
+    ]
   },
 };
