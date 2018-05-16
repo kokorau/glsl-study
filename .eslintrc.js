@@ -16,4 +16,4 @@ module.exports = {
   plugins: ['vue'],
   // add your custom rules here
   rules: {},
-};
+}

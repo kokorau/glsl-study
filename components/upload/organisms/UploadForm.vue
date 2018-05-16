@@ -1,10 +1,12 @@
 <template lang="pug">
-  section.container
+
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'UploadForm',
+}
 </script>
 
-<style lang="sass">
+<style>
 </style>

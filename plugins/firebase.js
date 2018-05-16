@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase'
 
 // kokorau-player
 firebase.initializeApp({
@@ -8,8 +8,8 @@ firebase.initializeApp({
   projectId: 'kokorau-player',
   storageBucket: 'kokorau-player.appspot.com',
   messagingSenderId: '718660724531',
-});
+})
 
-const storage = firebase.storage();
+const storage = firebase.storage()
 
-export { storage };
+export { storage }

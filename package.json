@@ -10,7 +10,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "prettier": "prettier --write --single-quote --trailing-comma es5 \"./**/*.js\"",
+    "prettier": "prettier --write \"./**/*.{js,vue}\"",
     "precommit": "yarn run prettier"
   },
   "dependencies": {
